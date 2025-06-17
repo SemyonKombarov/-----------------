@@ -2,3 +2,4 @@
 EPSG-v12_013-WKT/
 EPSG-v12_013-WKT.Zip
 .vscode/
+__pycache__

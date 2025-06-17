@@ -37,6 +37,16 @@ def csv_to_dict(filename):
                 result_dict[key] = value
     return result_dict
 
+def csv_to_list(filename):
+    result_list = []
+    with open(filename, 'r', encoding='utf-8') as csvfile:
+        reader = csv.reader(csvfile)
+        next(reader)  # Пропускаем заголовок (если он есть)
+        for row in reader:
+            if len(row) >= 2:  # Проверяем, что строка содержит ключ и значение
+                result_list.append(row[1] + " ("+row[0]+")")
+    return result_list
+
 # Пример использования
 loaded_dict = csv_to_dict('dictionary.csv')
 print(loaded_dict)
