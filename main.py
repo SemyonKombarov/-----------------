@@ -10,7 +10,7 @@ from PySide6.QtCore import Qt, QTimer, QAbstractTableModel, QModelIndex
 
 from parcer import csv_to_list
 from pyproj import Transformer
-
+from dictionary import data
 from ui.ui_main import Ui_mainWindow
 
 class MainWindow(QMainWindow):
@@ -22,13 +22,7 @@ class MainWindow(QMainWindow):
         self.ui.setupUi(self)
 
         #Подгрузка словаря
-        try:
-            self.word_dictionary = csv_to_list('dictionary.csv')
-            if not self.word_dictionary:
-                self.word_dictionary = ["Словарь пуст"]
-        except Exception as e:
-            print(f"Ошибка загрузки словаря: {e}")
-            self.word_dictionary = ["Ошибка загрузки словаря"]
+        self.word_dictionary = data
 
         #Подтверждение выбора исходной и целевой СК
         self.ui.listWidget.itemClicked.connect(lambda item: 
@@ -90,7 +84,6 @@ class MainWindow(QMainWindow):
     def help(self):
         QMessageBox.information(self, "А помоши не будет...", "По всем остальным вопросам обращаться по адресу: Kombarov.SVya@contractor.gazprom-neft.ru")
         
-    
     def add_coords_manualy(self):
         """Добавляет новую строку в таблицу координат"""
         model = self.ui.tableView.model()
@@ -121,7 +114,7 @@ class MainWindow(QMainWindow):
         header.setDefaultAlignment(Qt.AlignLeft)  # Выравнивание заголовков по левому краю
 
     def export_xlsx(self):
-        """Экспорт данных из tableview_2 в файл Excel"""
+        """Экспорт данных из tableview_2 в файл CSV (UTF-8)"""
         # Получаем модель из tableview_2
         model = self.ui.tableView_2.model()
         
@@ -148,30 +141,30 @@ class MainWindow(QMainWindow):
         # Создаем DataFrame
         df = pd.DataFrame(data, columns=headers)
         
-        # Открываем диалог сохранения файла
+        # Открываем диалог сохранения файла с фильтром для CSV
         file_path, _ = QFileDialog.getSaveFileName(
             self,
-            "Сохранить файл Excel",
+            "Сохранить файл CSV",
             "",
-            "Excel Files (*.xlsx);;All Files (*)",
+            "CSV Files (*.csv);;All Files (*)",
             options=QFileDialog.Options()
         )
         
         if not file_path:
             return  # Пользователь отменил сохранение
         
-        # Добавляем расширение .xlsx, если его нет
-        if not file_path.lower().endswith('.xlsx'):
-            file_path += '.xlsx'
+        # Добавляем расширение .csv, если его нет
+        if not file_path.lower().endswith('.csv'):
+            file_path += '.csv'
         
         try:
-            # Сохраняем в Excel
-            df.to_excel(file_path, index=False, engine='openpyxl')
+            # Сохраняем в CSV с кодировкой UTF-8
+            df.to_csv(file_path, index=False, encoding='utf-8-sig')  # utf-8-sig для BOM (лучшая совместимость с Excel)
             QMessageBox.information(self, "Успех", f"Файл успешно сохранен:\n{file_path}")
         except Exception as e:
             QMessageBox.critical(self, "Ошибка", f"Не удалось сохранить файл:\n{str(e)}")
             return
-
+    
     def copy_selection(self, table_view:QTableView):
         """Копирует выделенный диапазон ячеек в буфер обмена"""
         selection = table_view.selectionModel()

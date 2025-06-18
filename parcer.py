@@ -44,7 +44,7 @@ def csv_to_list(filename):
         next(reader)  # Пропускаем заголовок (если он есть)
         for row in reader:
             if len(row) >= 2:  # Проверяем, что строка содержит ключ и значение
-                result_list.append(row[1] + " ("+row[0]+")")
+                result_list.append(row[1] + " (" + row[0] + ")")
     return result_list
 
 # Пример использования
