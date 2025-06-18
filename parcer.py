@@ -49,7 +49,7 @@ def csv_to_list(filename):
 
 # Пример использования
 loaded_dict = csv_to_dict('dictionary.csv')
-print(loaded_dict)
+# print(loaded_dict)
 
 # Пример использования
 if __name__ == "__main__":

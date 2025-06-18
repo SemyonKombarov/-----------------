@@ -1,20 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>MainWindow</class>
- <widget class="QMainWindow" name="MainWindow">
+ <class>mainWindow</class>
+ <widget class="QMainWindow" name="mainWindow">
   <property name="geometry">
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>400</width>
-    <height>305</height>
+    <width>525</width>
+    <height>355</height>
    </rect>
   </property>
   <property name="windowTitle">
-   <string>MainWindow</string>
+   <string>Перевод координат v0.1</string>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <layout class="QHBoxLayout" name="horizontalLayout_3">
+   <layout class="QVBoxLayout" name="verticalLayout_2">
     <item>
      <layout class="QHBoxLayout" name="horizontalLayout_2">
       <item>
@@ -50,6 +50,9 @@
         </item>
         <item>
          <widget class="QPushButton" name="pushButton">
+          <property name="enabled">
+           <bool>true</bool>
+          </property>
           <property name="text">
            <string>Добавить точку</string>
           </property>
@@ -62,8 +65,11 @@
          <layout class="QHBoxLayout" name="horizontalLayout">
           <item>
            <widget class="QPushButton" name="pushButton_2">
+            <property name="enabled">
+             <bool>true</bool>
+            </property>
             <property name="text">
-             <string>Импорт XLSX</string>
+             <string>Помошь</string>
             </property>
            </widget>
           </item>
@@ -111,8 +117,17 @@
         </item>
         <item>
          <widget class="QPushButton" name="pushButton_4">
+          <property name="enabled">
+           <bool>true</bool>
+          </property>
           <property name="autoFillBackground">
            <bool>false</bool>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">/*QPushButton{background-color:rgb(233, 248, 255)}/
+QPushButton::hover{background-color:rgb(208, 248, 255)}
+QPushButton::pressed{background-color:rgb(181, 232, 255)}QPushButton::disabled{background-color:rgb(233, 248, 255)}
+</string>
           </property>
           <property name="text">
            <string>Пересчитать</string>
@@ -124,6 +139,9 @@
         </item>
         <item>
          <widget class="QPushButton" name="pushButton_5">
+          <property name="enabled">
+           <bool>true</bool>
+          </property>
           <property name="text">
            <string>Выгрузить XLSX</string>
           </property>
@@ -132,6 +150,25 @@
        </layout>
       </item>
      </layout>
+    </item>
+    <item>
+     <widget class="QLabel" name="label">
+      <property name="font">
+       <font>
+        <kerning>true</kerning>
+       </font>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">color:rgb(209, 209, 209);
+background-color: transparent;</string>
+      </property>
+      <property name="text">
+       <string>powered by pyproj 3.7.1</string>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+      </property>
+     </widget>
     </item>
    </layout>
   </widget>

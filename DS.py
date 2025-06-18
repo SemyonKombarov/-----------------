@@ -3,7 +3,7 @@ from PySide6.QtWidgets import (QApplication, QMainWindow, QTableView,
                               QVBoxLayout, QWidget, QMessageBox, QPushButton,
                               QHBoxLayout, QDialog, QComboBox, QLabel, QDialogButtonBox)
 from PySide6.QtCore import Qt, QAbstractTableModel, QModelIndex
-from PySide6.QtGui import QClipboard
+from PySide6.QtGui import QClipboard, QKeyEvent
 
 class ColumnMappingDialog(QDialog):
     def __init__(self, columns, parent=None):
@@ -104,6 +104,14 @@ class PandasModel(QAbstractTableModel):
         self.endResetModel()
         
         return True
+        
+    def remove_row(self, row):
+        if 0 <= row < len(self._data):
+            self.beginRemoveRows(QModelIndex(), row, row)
+            del self._data[row]
+            self.endRemoveRows()
+            return True
+        return False
 
 class MainWindow(QMainWindow):
     def __init__(self):
@@ -131,14 +139,33 @@ class MainWindow(QMainWindow):
         self.model = PandasModel()
         self.tableView.setModel(self.model)
         main_layout.addWidget(self.tableView)
+        
+        # Устанавливаем фокус на таблицу, чтобы она могла получать события клавиатуры
+        self.tableView.setFocus()
 
     def keyPressEvent(self, event):
         if event.key() == Qt.Key_V and event.modifiers() == Qt.ControlModifier:
             self.paste_from_clipboard()
         elif event.key() == Qt.Key_C and event.modifiers() == Qt.ControlModifier:
             self.copy_to_clipboard()
+        elif event.key() == Qt.Key_Delete:
+            self.delete_selected_rows()
         else:
             super().keyPressEvent(event)
+
+    def delete_selected_rows(self):
+        """Удаляет выбранные строки по нажатию клавиши Delete"""
+        selection = self.ui.tableView.selectionModel()
+        if not selection.hasSelection():
+            return
+            
+        selected_rows = set(index.row() for index in selection.selectedRows())
+        if not selected_rows:
+            return
+            
+        # Удаляем строки в обратном порядке, чтобы индексы не сдвигались
+        for row in sorted(selected_rows, reverse=True):
+            self.model.remove_row(row)
 
     def paste_from_clipboard(self):
         clipboard = QApplication.clipboard()
