@@ -7,7 +7,7 @@
 2. Создание виртуального окружения
 ```python3 -m venv venv```
 3. Активация вирутального окружения
-```source venv/bin/activate```
+```source venv/Scripts/activate```
 4. Установка зависимостей
 ```pip3 install -r requirements.txt```
 5. Запуск скрипта для демонстрации возможностей ПО
