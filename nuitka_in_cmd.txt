@@ -1,0 +1,1 @@
+python -m nuitka --onefile --enable-plugin=pyside6 --plugin-enable=upx --lto=yes --remove-output --follow-imports --windows-icon-from-ico=earth_.ico --windows-product-name="Перевод координат" --windows-file-version=0.1 --output-filename="Перевод координат v0.1" main.py

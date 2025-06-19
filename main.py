@@ -145,7 +145,7 @@ class MainWindow(QMainWindow):
             "Сохранить файл CSV",
             "",
             "CSV Files (*.csv);;All Files (*)",
-            options=QFileDialog.Options()
+            options=QFileDialog.Option(0)  # Или просто удалите параметр options
         )
         
         if not file_path:
