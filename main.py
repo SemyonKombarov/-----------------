@@ -1,14 +1,12 @@
-import os
+
 import pandas as pd
-import openpyxl
 from PySide6.QtWidgets import (QApplication, QMainWindow, QVBoxLayout, 
                               QListWidget, QLineEdit,QFileDialog,
                               QLabel, QDialog, QComboBox, QDialogButtonBox, 
                               QMessageBox, QHeaderView, QTableView)
-from PySide6.QtGui import QIcon, QShortcut, QKeySequence
+from PySide6.QtGui import QShortcut, QKeySequence
 from PySide6.QtCore import Qt, QTimer, QAbstractTableModel, QModelIndex
 
-from parcer import csv_to_list
 from pyproj import Transformer
 from dictionary import data
 from ui.ui_main import Ui_mainWindow
@@ -599,10 +597,6 @@ class Perevod(QAbstractTableModel):
         
 if __name__ == "__main__":
     app = QApplication([])
-    basedir = "C:/Users/semyo/OneDrive/Desktop/Перевод координат/ui"
-    icon_path = os.path.join(basedir, "earth_.ico")
-    icon = QIcon(icon_path)
     window = MainWindow()
-    window.setWindowIcon(icon)
     window.show()
     app.exec()
