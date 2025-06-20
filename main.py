@@ -563,6 +563,7 @@ class Perevod(QAbstractTableModel):
     def __init__(self, source_crs, target_crs, model, parent = None):
         super().__init__(parent)
         numbers = "0123456789"
+        self.crs_name = " ".join(source_crs)
         self.source_crs = int("".join([i for i in source_crs[-1] if i in numbers]))
         self.target_crs = int("".join([i for i in target_crs[-1] if i in numbers]))
         self.model = model._data
@@ -573,7 +574,21 @@ class Perevod(QAbstractTableModel):
     def from_source_to_target_crs(self):
         lst = []    
         transformer = Transformer.from_crs(self.source_crs, self.target_crs)
+        hantos_fields = {
+            "UTM Геонац 42N (Приобское) (32642)":[69.204, 50.538],
+            "UTM Геонац 42N (Зимнее) (32642)":[68.885, 51.173],
+            "UTM Геонац 42N (Красноленинское) (32642)":[70.117, 50.83],
+            "UTM Геонац 43N (Мало-Юганское) (32643)":[56.005, 43.855],
+            "UTM Геонац 43N (Орехово-Ермаковское) (32643)":[56.237, 43.463]
+        }
+        popravka_1 = 0
+        popravka_2 = 0
         
+        for i in hantos_fields:
+            if self.crs_name == i:
+                popravka_1 = hantos_fields[i][0]
+                popravka_2 = hantos_fields[i][1]
+            
         # Находим индексы столбцов с координатами
         for x, y in enumerate(self.headers):
             if y == "Долгота/X":
@@ -585,8 +600,8 @@ class Perevod(QAbstractTableModel):
             try:
                 # Преобразуем координаты, заменяя запятые на точки для корректного преобразования в float
                 tmp = transformer.transform(
-                    float(i[lat].replace(",", ".")), 
-                    float(i[long].replace(",", "."))
+                    float(i[lat].replace(",", ".")) - popravka_1, 
+                    float(i[long].replace(",", ".")) - popravka_2
                 )
                 lst.append(tmp)
             except Exception as e:

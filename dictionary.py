@@ -1,5 +1,11 @@
 # Этот модуль был автоматически сгенерирован
 data = [
+    "WGS 84 (4326)",
+    "UTM Геонац 42N (Приобское) (32642)",
+    "UTM Геонац 42N (Зимнее) (32642)",
+    "UTM Геонац 42N (Красноленинское) (32642)",
+    "UTM Геонац 43N (Мало-Юганское) (32643)",
+    "UTM Геонац 43N (Орехово-Ермаковское) (32643)",
     "MSL UK & Ireland VORF08 depth (10150)",
     "CD UK & Ireland VORF08 depth (10151)",
     "ETRS89 + MSL UK & Ireland VORF08 depth (10156)",
@@ -3982,7 +3988,6 @@ data = [
     "KUDAMS (4319)",
     "WGS 72 (4322)",
     "WGS 72BE (4324)",
-    "WGS 84 (4326)",
     "Kertau 1968 / Johor Grid (4390)",
     "Kertau 1968 / Sembilan and Melaka Grid (4391)",
     "Kertau 1968 / Pahang Grid (4392)",

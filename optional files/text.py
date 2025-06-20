@@ -2,7 +2,7 @@ from PySide6.QtWidgets import (QApplication, QMainWindow, QVBoxLayout,
                               QTextEdit, QListWidget, QWidget)
 from PySide6.QtGui import QTextCursor
 from PySide6.QtCore import Qt, QTimer
-from parcer import csv_to_list
+
 
 
 class TextEditWithSuggestions(QMainWindow):
